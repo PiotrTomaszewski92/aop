@@ -11,6 +11,8 @@ public class MainDemoApp {
             AccountDAO accountDAO = context.getBean("accountDAO", AccountDAO.class);
         //call the business method
             accountDAO.addAccount();
+            System.out.println("CALL IT AGAIN!");
+            accountDAO.addAccount();
         //close the context
             context.close();
     }
