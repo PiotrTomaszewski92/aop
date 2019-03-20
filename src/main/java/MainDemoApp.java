@@ -10,10 +10,15 @@ public class MainDemoApp {
         //get the bean from spring container
             AccountDAO accountDAO = context.getBean("accountDAO", AccountDAO.class);
         //call the business method
-            accountDAO.addAccount();
+             accountDAO.addAccount(true);
             System.out.println("CALL IT AGAIN!");
-            accountDAO.addAccount();
-        //close the context
+            accountDAO.addAccount(true);
+            //getters / setters
+            accountDAO.getName();
+            accountDAO.getServiceCode();
+            accountDAO.setName("Yo");
+            accountDAO.setServiceCode("Yo2");
+        //close the contextf
             context.close();
     }
 }
