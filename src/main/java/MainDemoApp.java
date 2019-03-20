@@ -14,6 +14,8 @@ public class MainDemoApp {
             System.out.println("CALL IT AGAIN!");
             accountDAO.addAccount(true);
             //getters / setters
+
+            System.out.println(" ====== getters / setters ====== ");
             accountDAO.getName();
             accountDAO.getServiceCode();
             accountDAO.setName("Yo");
