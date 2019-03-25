@@ -52,6 +52,13 @@ public class MyDemoLoggingAspect {
         }
     }
 
+    @After("execution(* dao.AccountDAO.findAccounts(..))")
+    public void afterFinallyFindAccountsAdvice(JoinPoint joinPoint){
+        String method = joinPoint.getSignature().toShortString();
+        System.out.println("~~~~~~>> Executing @After (finally) on method: "+method);
+    }
+
+
     @AfterThrowing(pointcut = "execution(* dao.AccountDAO.findAccounts(..))", throwing = "excecut")
     public void afterThrowingFindAccountsAdvice(JoinPoint joinPoint, Throwable excecut){
         String method = joinPoint.getSignature().toShortString();
