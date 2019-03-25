@@ -4,17 +4,24 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import java.util.List;
 
-public class AfterReturningDemoApp {
+public class AfterThrowingDemoApp {
     public static void main(String[] args) {
         //read spring config java class
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(DemoConfig.class);
 
         AccountDAO theAccountDAO = context.getBean("accountDAO",AccountDAO.class);
+        List<AccountDAO> theAccounts = null;
+        try{
+            //add a boolean flag to simulate exceptions
+            boolean tripWare = true;
+            theAccountDAO.findAccounts(tripWare);
+        }catch (Exception exc){
+            System.out.println("#####Main programm --- caught exception: "+exc);
+        }
 
-        List<AccountDAO> theAccounts = theAccountDAO.findAccounts(false);
 
-        System.out.println("\nMain program: after returning demo app");
+        System.out.println("\nMain program: after throwing demo app");
         System.out.println("================");
         System.out.println(theAccounts);
 

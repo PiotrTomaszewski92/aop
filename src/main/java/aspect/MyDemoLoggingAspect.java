@@ -2,10 +2,7 @@ package aspect;
 
 import dao.AccountDAO;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -53,5 +50,13 @@ public class MyDemoLoggingAspect {
             String theUpperName = account.getName().toUpperCase();
             account.setName(theUpperName);
         }
+    }
+
+    @AfterThrowing(pointcut = "execution(* dao.AccountDAO.findAccounts(..))", throwing = "excecut")
+    public void afterThrowingFindAccountsAdvice(JoinPoint joinPoint, Throwable excecut){
+        String method = joinPoint.getSignature().toShortString();
+        System.out.println("=-=-=-=-=>> Executing @AfterThrowing on method "+method);
+
+        System.out.println("=-=-=-=-=>> The exception is: "+excecut);
     }
 }

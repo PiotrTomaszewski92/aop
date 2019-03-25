@@ -42,7 +42,9 @@ public class AccountDAO {
         this.serviceCode = serviceCode;
     }
 
-    public List<AccountDAO> findAccounts(){
+    public List<AccountDAO> findAccounts(boolean tripWare){
+        if(tripWare)
+            throw new RuntimeException("Error!!!!!");
         List<AccountDAO> myAccounts = new ArrayList<>();
         myAccounts.add(new AccountDAO("John", "Silver"));
         myAccounts.add(new AccountDAO("Peter", "Platinum"));
