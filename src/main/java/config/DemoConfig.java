@@ -6,6 +6,6 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 @Configuration
 @EnableAspectJAutoProxy
-@ComponentScan({"dao", "aspect"})
+@ComponentScan({"dao", "aspect", "service"})
 public class DemoConfig { }
 

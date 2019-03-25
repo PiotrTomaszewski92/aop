@@ -2,6 +2,7 @@ package aspect;
 
 import dao.AccountDAO;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
@@ -58,12 +59,23 @@ public class MyDemoLoggingAspect {
         System.out.println("~~~~~~>> Executing @After (finally) on method: "+method);
     }
 
-
     @AfterThrowing(pointcut = "execution(* dao.AccountDAO.findAccounts(..))", throwing = "excecut")
     public void afterThrowingFindAccountsAdvice(JoinPoint joinPoint, Throwable excecut){
         String method = joinPoint.getSignature().toShortString();
         System.out.println("=-=-=-=-=>> Executing @AfterThrowing on method "+method);
 
         System.out.println("=-=-=-=-=>> The exception is: "+excecut);
+    }
+
+    @Around("execution(* service.*.getFortune(..))")
+    public Object aroundGetFortune(ProceedingJoinPoint proceedingJoinPoint) throws Throwable{
+        String method = proceedingJoinPoint.getSignature().toShortString();
+        System.out.println("+++++++++>> Executing @Around on method: "+method);
+
+        long begin = System.currentTimeMillis();
+            Object result = proceedingJoinPoint.proceed();
+        long end = System.currentTimeMillis();
+        System.out.println("+++++++++>> Duration: "+(end-begin)/1000.0+ " seconds");
+        return result;
     }
 }
