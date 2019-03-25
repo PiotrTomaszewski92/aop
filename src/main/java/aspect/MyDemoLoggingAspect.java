@@ -1,8 +1,11 @@
 package aspect;
 
+import dao.AccountDAO;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -11,8 +14,22 @@ import org.springframework.stereotype.Component;
 @Order(2)
 public class MyDemoLoggingAspect {
     @Before("LuvAopExpressions.forDaoPackageNoGetterSetter()")
-    public void beforeAddAccountAdvice(){ //can be any method name
+    public void beforeAddAccountAdvice(JoinPoint theJoinPoint){ //can be any method name
         //add our custom code
         System.out.println("====>> Executing @Before advice - MyDemoLoggingAspect");
+
+        //display the method signature
+        MethodSignature methodSignature = (MethodSignature) theJoinPoint.getSignature();
+        System.out.println("Method: "+methodSignature);
+
+        //display method arguments
+        Object[] args = theJoinPoint.getArgs();
+        for (Object tempArg : args){
+            System.out.println(tempArg);
+            if(tempArg instanceof AccountDAO){
+                AccountDAO theAccount = (AccountDAO) tempArg;
+                System.out.println("Account name: "+theAccount.getName()+", level: "+theAccount.getServiceCode());
+            }
+        }
     }
 }

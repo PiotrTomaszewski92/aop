@@ -9,6 +9,8 @@ public class MainDemoApp {
                 new AnnotationConfigApplicationContext(DemoConfig.class);
         //get the bean from spring container
             AccountDAO accountDAO = context.getBean("accountDAO", AccountDAO.class);
+            accountDAO.setName("Peter");
+            accountDAO.setServiceCode("Xyz");
         //call the business method
              accountDAO.addAccount(true);
             System.out.println("CALL IT AGAIN!");
