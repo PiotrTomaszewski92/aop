@@ -2,12 +2,16 @@ package aspect;
 
 import dao.AccountDAO;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+
+import java.sql.SQLOutput;
+import java.util.List;
 
 @Aspect
 @Component
@@ -30,6 +34,24 @@ public class MyDemoLoggingAspect {
                 AccountDAO theAccount = (AccountDAO) tempArg;
                 System.out.println("Account name: "+theAccount.getName()+", level: "+theAccount.getServiceCode());
             }
+        }
+    }
+
+    @AfterReturning(pointcut = "execution(* dao.AccountDAO.findAccounts(..))", returning = "result")
+    public void afterReturningFindAccountsAdvice(JoinPoint theJoinPoint, List<AccountDAO> result){
+        String method = theJoinPoint.getSignature().toShortString();
+        System.out.println("====>> Executing @AfterReturning on method: "+method);
+        System.out.println("====>> result is: "+result);
+
+        // let's modify data!'
+        convertAccountNamesToUpperCase(result);
+        System.out.println("====>> result is: "+result);
+    }
+
+    private void convertAccountNamesToUpperCase(List<AccountDAO> result) {
+        for(AccountDAO account : result){
+            String theUpperName = account.getName().toUpperCase();
+            account.setName(theUpperName);
         }
     }
 }
