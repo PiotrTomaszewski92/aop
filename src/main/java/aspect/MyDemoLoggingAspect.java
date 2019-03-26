@@ -78,9 +78,8 @@ public class MyDemoLoggingAspect {
             try {
                 result = proceedingJoinPoint.proceed();
             }catch (RuntimeException exc){
-                System.out.println("+~+~+~+~+ "+exc.getMessage());
-                result = "Major accident! But no worries, " +
-                        "your private AOP helicopter is on the way!";
+                //rethrow exception:
+                throw exc;
             }
         long end = System.currentTimeMillis();
         System.out.println("+++++++++>> Duration: "+(end-begin)/1000.0+ " seconds");

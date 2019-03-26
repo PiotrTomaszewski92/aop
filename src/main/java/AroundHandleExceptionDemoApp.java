@@ -13,8 +13,13 @@ public class AroundHandleExceptionDemoApp {
 
         System.out.println("+~+~+~+~+ Main program: Around  Handle Exception Demo App");
         System.out.println("+~+~+~+~+ Calling getFortune");
-        boolean tripWire = true;
-        String data = theFortuneService.getFortune(tripWire);
+        String data = null;
+        try {
+            boolean tripWire = true;
+            data = theFortuneService.getFortune(tripWire);
+        }catch(RuntimeException e){
+            System.out.println("Exception in main program: "+e.getMessage());
+        }
         System.out.println("+~+~+~+~+ My fortune is: "+data);
         System.out.println("+~+~+~+~+ Finished");
         context.close();
